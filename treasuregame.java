@@ -1,49 +1,81 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
-public class tresuregame {
+public class treasuregame {
+
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        Random rand = new Random();
 
-        String name;
-        int age;
-        double wPower;
-        double defense;
-        int tCode;
-        int tCodeGuess;
-        int energy = 100;
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
 
-        tCode = rand.nextInt(10) + 1;
+        System.out.println("=========================================");
+        System.out.println("        WELCOME TO TREASURE HUNTER       ");
+        System.out.println("=========================================");
 
-        System.out.println("Enter your name: ");
-        name = scan.nextLine();
-        System.out.println("Enter your age: ");
-        age = scan.nextInt();
-        System.out.println("Enter your Weapon Power (1-100): ");
-        wPower = scan.nextDouble();
-        System.out.println("Enter your Defense (1-50): ");
-        defense = scan.nextDouble();
-        System.out.println("Enter your guess: ");
-        tCodeGuess = scan.nextInt();
+        System.out.print("Enter your name: ");
+        String playerName = scanner.nextLine();
 
-        int remEn = energy - 20;
-        boolean isCorrect = tCodeGuess == tCode;
-        int prem = (int) ((wPower * 2) - (defense * 2.0));
-        int score = (int) (wPower + defense);
-        boolean win = score == 100;
+        System.out.print("Enter your age: ");
+        int playerAge = scanner.nextInt();
 
-        System.out.println("=============================");
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("Attack damage: " + prem);
-        System.out.println("Remaining Energy: " + remEn);
-        System.out.println("Guess Correctly: " + isCorrect);
-        System.out.println("Correct Treasure Code: " + tCode);
-        System.out.println("Score: " + score);
-        System.out.println("=============================");
+        System.out.print("Enter your weapon power (1-100): ");
+        int weaponPower = scanner.nextInt();
 
-        System.out.println("Did you win: " + win);
-        System.out.println("Did you correctly guess: " + isCorrect);
+        System.out.print("Enter your defense level (1-100): ");
+        int defenseLevel = scanner.nextInt();
+
+        System.out.print("Guess the treasure code (1-10): ");
+        int playerGuess = scanner.nextInt();
+
+        int treasureCode = random.nextInt(10) + 1;
+
+        int attackDamage = (weaponPower * 2) - (defenseLevel / 2);
+
+        int baseEnergy = 100;
+        int remainingEnergy = baseEnergy - (playerAge / 2) - (defenseLevel % 10);
+
+        boolean correctGuess = (playerGuess == treasureCode);
+        boolean strongEnoughAttack = (attackDamage >= 50);
+        boolean hasEnoughEnergy = (remainingEnergy > 0);
+        boolean isAdult = (playerAge >= 18);
+
+        boolean gameWon = correctGuess && strongEnoughAttack && hasEnoughEnergy;
+
+        System.out.println();
+        System.out.println("=========================================");
+        System.out.println("               PLAYER PROFILE            ");
+        System.out.println("=========================================");
+        System.out.println("Name            : " + playerName);
+        System.out.println("Age             : " + playerAge);
+        System.out.println("Weapon Power    : " + weaponPower);
+        System.out.println("Defense Level   : " + defenseLevel);
+        System.out.println("Treasure Guess  : " + playerGuess);
+
+        System.out.println();
+        System.out.println("=========================================");
+        System.out.println("               GAME RESULTS               ");
+        System.out.println("=========================================");
+        System.out.println("Actual Treasure Code : " + treasureCode);
+        System.out.println("Attack Damage         : " + attackDamage);
+        System.out.println("Remaining Energy      : " + remainingEnergy);
+
+        System.out.println();
+        System.out.println("---------- Boolean Checks ----------");
+        System.out.println("Correct Guess?        : " + correctGuess);
+        System.out.println("Strong Enough Attack? : " + strongEnoughAttack);
+        System.out.println("Has Enough Energy?    : " + hasEnoughEnergy);
+        System.out.println("Is Adult?             : " + isAdult);
+
+        System.out.println();
+        System.out.println("=========================================");
+        if (gameWon) {
+            System.out.println(playerName + ", YOU FOUND THE TREASURE! YOU WIN!");
+        } else {
+            System.out.println(playerName + ", the treasure remains hidden. YOU LOSE!");
+        }
+        System.out.println("Game Won: " + gameWon);
+        System.out.println("=========================================");
+
+        scanner.close();
     }
 }
